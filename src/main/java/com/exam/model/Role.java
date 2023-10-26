@@ -1,29 +1,80 @@
 package com.exam.model;
 
-import lombok.*;
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Data
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
 @Table(name = "roles")
 public class Role {
 
     @Id
-    @Column(name = "role_id", nullable = false)
     private Long roleId;
-    @Column(name = "role_name")
     private String roleName;
 
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "role")
-    private Set<UserRole> userRoles = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "role")
+    private Set<UserRole> userRoles=new HashSet<>();
+
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
+    }
+
+
+    public Role(Long roleId, String roleName, Set<UserRole> userRoles) {
+        super();
+        this.roleId = roleId;
+        this.roleName = roleName;
+        this.userRoles = userRoles;
+    }
+
+
+    public Role() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+
 
 
 }
