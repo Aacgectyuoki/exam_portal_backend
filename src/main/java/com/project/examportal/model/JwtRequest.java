@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JwtRequest {
-	String username;
-    String password;
+	private String username;
+    private String password;
 	public String getUsername() {
 		return username;
 	}

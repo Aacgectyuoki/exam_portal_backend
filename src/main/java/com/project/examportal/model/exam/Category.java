@@ -1,23 +1,17 @@
 package com.project.examportal.model.exam;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
+
+import javax.persistence.*;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "category")
 public class Category {
@@ -32,7 +26,8 @@ public class Category {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Quiz> quizzes = new LinkedHashSet<>();
+	@ToString.Exclude
+	private Set<Quiz> quizzes = new LinkedHashSet<>();
     
     public Category(String title, String description) {
         this.title = title;
@@ -83,6 +78,20 @@ public class Category {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-    
-    
+
+	@Override
+	public final boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null) return false;
+		Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+		Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+		if (thisEffectiveClass != oEffectiveClass) return false;
+		Category category = (Category) o;
+		return getCid() != null && Objects.equals(getCid(), category.getCid());
+	}
+
+	@Override
+	public final int hashCode() {
+		return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+	}
 }

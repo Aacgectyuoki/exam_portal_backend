@@ -1,22 +1,17 @@
 package com.project.examportal.model.exam;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
+
+import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.Data;
-
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 public class Quiz {
 	
@@ -36,7 +31,8 @@ public class Quiz {
 
 	    @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	    @JsonIgnore
-	    private Set<Question> questions = new HashSet<>();
+		@ToString.Exclude
+		private Set<Question> questions = new HashSet<>();
 	    
 	    public boolean isActive() {
 	        return active;
@@ -119,6 +115,20 @@ public class Quiz {
 			super();
 			// TODO Auto-generated constructor stub
 		}
-	    
-	    
+
+	@Override
+	public final boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null) return false;
+		Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+		Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+		if (thisEffectiveClass != oEffectiveClass) return false;
+		Quiz quiz = (Quiz) o;
+		return getqId() != null && Objects.equals(getqId(), quiz.getqId());
+	}
+
+	@Override
+	public final int hashCode() {
+		return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+	}
 }
