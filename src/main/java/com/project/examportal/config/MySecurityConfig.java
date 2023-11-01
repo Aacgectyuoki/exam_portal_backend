@@ -13,14 +13,31 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.project.examportal.service.implementation.UserDetailsServiceImpl;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @EnableWebSecurity
 @Configuration
+@EnableWebMvc
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MySecurityConfig extends WebSecurityConfigurerAdapter {
+
+
+    public static final String[] PUBLIC_URLS = {
+            "/api/v1/auth/**",
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/generate-token",
+            "/user"
+    };
 
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
@@ -59,6 +76,8 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/generate-token", "/user/").permitAll()
+                .antMatchers("v3/api-doc").permitAll()
+                .antMatchers(PUBLIC_URLS).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and()
