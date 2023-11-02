@@ -20,15 +20,9 @@ import java.util.Set;
 @SpringBootApplication
 public class ExamServerApiApplication  {
 
-    private final UserService userService;
-
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
     public final QuizRepository quizRepository;
 
     public ExamServerApiApplication(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder, QuizRepository quizRepository) {
-        this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.quizRepository = quizRepository;
     }
 
