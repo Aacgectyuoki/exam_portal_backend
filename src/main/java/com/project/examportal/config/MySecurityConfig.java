@@ -36,7 +36,8 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/generate-token",
-            "/user"
+            "/user",
+            "/user/test"
     };
 
     @Autowired

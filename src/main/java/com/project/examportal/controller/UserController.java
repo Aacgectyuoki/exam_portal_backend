@@ -60,10 +60,13 @@ public class UserController {
         return this.userService.updateUserProfile(userId, updatedUser);
     }
 
-
     @ExceptionHandler(UserFoundException.class)
     public ResponseEntity<?> exceptionHandler(UserFoundException ex) {
         return ResponseEntity.ok(ex.getMessage());
     }
 
+    @GetMapping("/test")
+    public String test(){
+        return "Welcome to backend API of Exam-portal";
+    }
 }
