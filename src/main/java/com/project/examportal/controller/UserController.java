@@ -1,9 +1,6 @@
 package com.project.examportal.controller;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +29,7 @@ public class UserController {
     /**
      * Constructor for UserController.
      *
-     * @param userService          The UserService to handle user-related operations.
+     * @param userService           The UserService to handle user-related operations.
      * @param bCryptPasswordEncoder The BCryptPasswordEncoder for password hashing.
      */
     public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -104,8 +101,8 @@ public class UserController {
     /**
      * Update user profile by userId.
      *
-     * @param userId       The ID of the user to update.
-     * @param updatedUser  The updated User object.
+     * @param userId      The ID of the user to update.
+     * @param updatedUser The updated User object.
      * @return The updated User object.
      */
     @PutMapping("/{userId}")
@@ -124,6 +121,18 @@ public class UserController {
     public ResponseEntity<?> exceptionHandler(UserFoundException ex) {
         logger.error("UserFoundException: {}", ex.getMessage());
         return ResponseEntity.ok(ex.getMessage());
+    }
+
+    /**
+     * Get a list of all users.
+     *
+     * @return A list of User objects.
+     */
+    @GetMapping("/")
+    public ResponseEntity<List<User>> getAllUsers() {
+        logger.info("Received a request to retrieve  all users");
+        List<User> users = this.userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     /**

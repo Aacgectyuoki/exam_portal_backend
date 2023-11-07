@@ -1,5 +1,6 @@
 package com.project.examportal.service;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,10 @@ public class UserService {
 
     public User getUser(String username) {
         return this.userRepository.findByUsername(username);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     public void deleteUser(Long userId) {
